@@ -5,39 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skincare Heaven</title>
   <style>
-  
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5e6d9; /* Ngjyrë kafe e hapur për pjesën tjetër të faqes */
+      background-color: #f5e6d9;
       color: #333;
       line-height: 1.6;
     }
 
     .header {
       position: relative;
-      height: 50vh; /* Lartësia e header-it */
-      background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover; /* Vendos imazhin këtu */
-      color: white;
+      height: 50vh;
+      background: url('https://www.ravalmd.com/hs-fs/hubfs/AdobeStock_276306017%20(1).jpeg?width=3285&height=2190&name=AdobeStock_276306017%20(1).jpeg') no-repeat center center/cover;
     }
 
     .header-content {
       position: absolute;
       top: 50%;
-      left: 10%;
+      right: 10%;
       transform: translateY(-50%);
-      text-align: left;
+      text-align: right;
+      color: black;
     }
 
     .header h1 {
       font-size: 3rem;
       margin: 0;
+      font-weight: bold;
     }
 
     .header p {
       font-size: 1.5rem;
       margin: 0.5rem 0 0;
+      font-weight: bold;
     }
 
     .section {
@@ -45,45 +46,63 @@
       text-align: center;
     }
 
-    .section h2 {
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    /* Seksioni Shop Goals */
+    .section.shop-goals {
+      background-color: #faf0e6;
+      padding: 2rem 1rem;
+      border-radius: 8px;
+      margin: 1rem auto;
+      max-width: 800px;
+    }
+
+    .shop-goals h2 {
       font-size: 2rem;
+      color: #bf8f5c;
       margin-bottom: 1rem;
-    }
-
-    .section p {
-      font-size: 1.1rem;
-      margin-bottom: 1rem;
-    }
-
-    .promise ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    .promise li {
-      margin: 1rem 0;
-      font-size: 1.1rem;
     }
 
     .shop-goals .goals {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 1rem;
     }
 
     .shop-goals .goals button {
       background-color: #d2a679;
       color: white;
       border: none;
-      padding: 0.7rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 5px;
-      cursor: pointer;
       font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     .shop-goals .goals button:hover {
       background-color: #bf8f5c;
+    }
+
+    /* Seksioni Favorites */
+    .section.favorites {
+      background-color: #fefefe;
+      padding: 2rem 1rem;
+      border-radius: 8px;
+      margin: 1rem auto;
+      max-width: 800px;
+    }
+
+    .favorites h2 {
+      font-size: 2rem;
+      color: #bf8f5c;
+      margin-bottom: 1rem;
     }
 
     .favorites ul {
@@ -94,35 +113,37 @@
     }
 
     .favorites li {
-      margin: 1rem 0;
+      margin: 0.5rem 0;
+      font-size: 1.1rem;
     }
 
-    .button {
+    .favorites li strong {
+      color: #bf8f5c;
+    }
+
+    .favorites .button {
       display: inline-block;
       background-color: #bf8f5c;
       color: white;
-      padding: 0.7rem 1.5rem;
+      padding: 0.8rem 1.5rem;
       text-decoration: none;
       border-radius: 5px;
-      margin-top: 1rem;
       font-size: 1rem;
+      transition: background-color 0.3s ease;
     }
 
-    .button:hover {
+    .favorites .button:hover {
       background-color: #d2a679;
     }
 
-    .footer {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 1.5rem 1rem;
-    }
+    /* Media Queries për responsivitet */
+    @media (max-width: 768px) {
+      .header {
+        height: 40vh;
+      }
 
-    /* Responsivitet për pajisje të vogla */
-    (max-width: 768px) {
       .header-content {
-        left: 5%;
+        right: 5%;
       }
 
       .header h1 {
@@ -130,22 +151,57 @@
       }
 
       .header p {
+        font-size: 1.2rem;
+      }
+
+      .shop-goals .goals {
+        gap: 0.7rem;
+      }
+
+      .shop-goals .goals button {
+        font-size: 0.9rem;
+        padding: 0.6rem 1.2rem;
+      }
+
+      .favorites ul {
+        max-width: 100%;
+      }
+
+      .favorites li {
         font-size: 1rem;
       }
     }
 
-     (max-width: 480px) {
+    @media (max-width: 480px) {
+      .header {
+        height: 30vh;
+      }
+
+      .header-content {
+        right: 5%;
+        text-align: center;
+        transform: translate(0, -50%);
+      }
+
       .header h1 {
         font-size: 2rem;
       }
 
       .header p {
-        font-size: 0.9rem;
+        font-size: 1rem;
       }
 
       .shop-goals .goals {
         flex-direction: column;
-        gap: 0.7rem;
+      }
+
+      .shop-goals .goals button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .favorites li {
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -163,17 +219,10 @@
     <p>Në Skincare Heaven, ne besojmë në manifestimin e bukurisë natyrale me produkte dhe rutina që rigjenerojnë, ushqejnë dhe transformojnë lëkurën tuaj.</p>
   </section>
 
-  <section class="section promise">
-    <h2>Premtimi Ynë</h2>
-    <ul>
-      <li><strong>Përbërës të Pastër</strong>: Vetëm më të mirët për lëkurën tuaj.</li>
-      <li><strong>Hidratim</strong>: Sepse çdo pamje e ndritshme fillon me hidratim.</li>
-      <li><strong>Qëndrueshmëri</strong>: Bukuri që kujdeset për ju dhe planetin.</li>
-    </ul>
-  </section>
+ 
 
   <section class="section shop-goals">
-    <h2>Bli Sipas asaj që lëkura juaj ka nevojë</h2>
+    <h2>Bli sipas asaj që lëkura juaj ka nevojë</h2>
     <div class="goals">
       <button>Ndriçim</button>
       <button>Rigjenerim</button>
@@ -183,10 +232,10 @@
   </section>
 
   <section class="section favorites">
-    <h2>Produktet e Preferuara të Klientëve</h2>
+    <h2>Produktet me te kerkuara i gjeni ketu:</h2>
     <ul>
       <li><strong>Serumi Ndriçues</strong> – Jepni shkëlqim të menjëhershëm!</li>
-      <li><strong>Kremi Hidratues Cloud</strong> – Thelbësor për hidratimin tuaj ditor.</li>
+      <li><strong>Kremi Hidratues </strong> – Thelbësor për hidratimin tuaj ditor.</li>
       <li><strong>Vaji Rikuperues Botanik</strong> – Rigjenerim gjatë natës.</li>
     </ul>
     <a href="#" class="button">Bli Tani</a>
