@@ -20,19 +20,19 @@
   <section class="promise">
     <h2>Premtimi Ynë</h2>
     <ul>
-      <li>🌟 <strong>Përbërës të Pastër</strong>: Vetëm më të mirët për lëkurën tuaj.</li>
-      <li>💧 <strong>Hidratim </strong>: Sepse çdo pamje e ndritshme fillon me hidratim.</li>
-      <li>🌿 <strong>Qëndrueshmëri</strong>: Bukuri që kujdeset për ju dhe planetin.</li>
+      <li> <strong>Përbërës të Pastër</strong>: Vetëm më të mirët për lëkurën tuaj.</li>
+      <li> <strong>Hidratim </strong>: Sepse çdo pamje e ndritshme fillon me hidratim.</li>
+      <li> <strong>Qëndrueshmëri</strong>: Bukuri që kujdeset për ju dhe planetin.</li>
     </ul>
   </section>
 
   <section class="shop-goals">
     <h2>Bli Sipas asaj qe lekura juaj ka nevoje</h2>
     <div class="goals">
-      <button>✨ Ndriçim</button>
-      <button>🌿  Rigjenerim</button>
-      <button>⚡ Kundër Plakjes</button>
-      <button>🧖‍♀️ Hidratim i Thellë</button>
+      <button> Ndriçim</button>
+      <button>  Rigjenerim</button>
+      <button> Kundër Plakjes</button>
+      <button> Hidratim i Thellë</button>
     </div>
   </section>
 
@@ -47,8 +47,8 @@
   </section>
 
   <section class="signup">
-    <h2>Merrni Shkëlqimin Hyjnor</h2>
-    <p>Bashkohuni me mijëra që kanë transformuar lëkurën e tyre me produktet tona super kualitative, të rekomanduara nga dermatologët.</p>
+    <h2>Merrni Shkëlqim Hyjnor</h2>
+    <p>Behuni nje nder klientet tane fatlm që kanë transformuar lëkurën e tyre me produktet tona super kualitative, të rekomanduara madje edhe nga dermatologët.</p>
     <a href="#" class="button">Regjistrohuni për Ofertat Ekskluzive</a>
   </section>
 
