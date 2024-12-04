@@ -14,6 +14,28 @@
       line-height: 1.6;
     }
 
+  
+    .navbar {
+      background-color: #bf8f5c;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #d2a679;
+    }
+
     .header {
       position: relative;
       height: 50vh;
@@ -53,7 +75,7 @@
       padding: 1.5rem 1rem;
     }
 
-    /* Seksioni Shop Goals */
+   
     .section.shop-goals {
       background-color: #faf0e6;
       padding: 2rem 1rem;
@@ -136,7 +158,7 @@
       background-color: #d2a679;
     }
 
-    /* Media Queries për responsivitet */
+  
     @media (max-width: 768px) {
       .header {
         height: 40vh;
@@ -207,6 +229,14 @@
   </style>
 </head>
 <body>
+  <nav class="navbar">
+    <a href="index.html">Homepage</a>
+    <a href="about.html">Rreth Nesh</a>
+     <a href="products.html">Produktet</a> 
+    <a href="register.html">Regjistrohu</a>
+    <a href="login.html">Login</a>
+  </nav>
+
   <header class="header">
     <div class="header-content">
       <h1>Skincare Heaven</h1>
@@ -219,8 +249,6 @@
     <p>Në Skincare Heaven, ne besojmë në manifestimin e bukurisë natyrale me produkte dhe rutina që rigjenerojnë, ushqejnë dhe transformojnë lëkurën tuaj.</p>
   </section>
 
- 
-
   <section class="section shop-goals">
     <h2>Bli sipas asaj që lëkura juaj ka nevojë</h2>
     <div class="goals">
@@ -232,18 +260,17 @@
   </section>
 
   <section class="section favorites">
-    <h2>Produktet me te kerkuara i gjeni ketu:</h2>
+    <h2>Produktet më të kërkuara:</h2>
     <ul>
       <li><strong>Serumi Ndriçues</strong> – Jepni shkëlqim të menjëhershëm!</li>
-      <li><strong>Kremi Hidratues </strong> – Thelbësor për hidratimin tuaj ditor.</li>
+      <li><strong>Kremi Hidratues</strong> – Thelbësor për hidratimin tuaj ditor.</li>
       <li><strong>Vaji Rikuperues Botanik</strong> – Rigjenerim gjatë natës.</li>
     </ul>
     <a href="#" class="button">Bli Tani</a>
   </section>
 
   <footer class="footer">
-    <p>Udhëtimi Juaj Për Lëkurën Fillon Këtu</p>
-    <a href="#" class="button">Filloni Udhëtimin</a>
+    <p>&copy; 2024 Skincare Heaven. Të gjitha të drejtat janë të rezervuara.</p>
   </footer>
 </body>
 </html>
