@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Regjistrohu në Skincare Heaven</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5e6d9;
+      color: #333;
+    }
+
+    
+    .navbar {
+      background-color: #bf8f5c;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      color: #d2a679;
+    }
+
+    
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 5px;
+    }
+
+    
+    .registration-container {
+      width: 50%;
+      margin: 50px auto;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .registration-container h2 {
+      text-align: center;
+      color: #bf8f5c;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus {
+      border-color: #bf8f5c;
+      outline: none;
+    }
+
+    .form-group .error {
+      color: red;
+      font-size: 0.9rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background-color: #bf8f5c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #d2a679;
+    }
+
+    .footer {
+      background-color: #333;
+      color: white;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      margin-top: 2rem;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
+   
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .navbar a {
+        margin: 0.5rem 0;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .navbar a.hide {
+        display: none;
+      }
+
+      .registration-container {
+        width: 80%;
+        padding: 1rem;
+      }
+
+      .registration-container h2 {
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .registration-container {
+        width: 90%;
+      }
+
+      .form-group input {
+        padding: 1rem;
+      }
+
+      button {
+        padding: 1.2rem;
+        font-size: 1.2rem;
+      }
+
+      .navbar a {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html">Homepage</a>
+    <a href="about.html">Rreth Nesh</a>
+    <a href="products.html">Produktet</a>
+    <a href="discounts.html">Zbritjet</a>
+    <a href="register.html">Regjistrohu</a>
+    <a href="login.html">Login</a>
+    <div class="hamburger" onclick="toggleMenu()">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </nav>
+
+  <div class="registration-container">
+    <h2>Regjistrohu në Skincare Heaven</h2>
+
+    <form id="registration-form">
+      <div class="form-group">
+        <label for="name">Emri</label>
+        <input type="text" id="name" name="name" required>
+        <p class="error" id="name-error"></p>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <p class="error" id="email-error"></p>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Fjalëkalimi</label>
+        <input type="password" id="password" name="password" required>
+        <p class="error" id="password-error"></p>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm-password">Konfirmo Fjalëkalimin</label>
+        <input type="password" id="confirm-password" name="confirm-password" required>
+        <p class="error" id="confirm-password-error"></p>
+      </div>
+
+      <button type="submit">Regjistrohu</button>
+    </form>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2024 Skincare Heaven. Të gjitha të drejtat janë të rezervuara.</p>
+    <p><a href="login.html">Keni një llogari? Hyni këtu</a></p>
+  </footer>
+
+  <script>
+    document.getElementById('registration-form').addEventListener('submit', function(event) {
+      event.preventDefault(); 
+
+      let name = document.getElementById('name').value.trim();
+      let email = document.getElementById('email').value.trim();
+      let password = document.getElementById('password').value;
+      let confirmPassword = document.getElementById('confirm-password').value;
+
+      let isValid = true;
+
+      document.getElementById('name-error').textContent = '';
+      document.getElementById('email-error').textContent = '';
+      document.getElementById('password-error').textContent = '';
+      document.getElementById('confirm-password-error').textContent = '';
+
+      if (name === '') {
+        document.getElementById('name-error').textContent = 'Emri është i detyrueshëm!';
+        isValid = false;
+      }
+
+      let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById('email-error').textContent = 'Ju lutem shkruani një email të saktë!';
+        isValid = false;
+      }
+
+      if (password.length < 6) {
+        document.getElementById('password-error').textContent = 'Fjalëkalimi duhet të jetë të paktën 6 karaktere!';
+        isValid = false;
+      }
+
+      if (password !== confirmPassword) {
+        document.getElementById('confirm-password-error').textContent = 'Fjalëkalimet nuk përputhen!';
+        isValid = false;
+      }
+
+      if (isValid) {
+        alert('Regjistrimi u krye me sukses!');
+      }
+    });
+
+    function toggleMenu() {
+      const links = document.querySelectorAll('.navbar a');
+      links.forEach(link => link.classList.toggle('hide'));
+    }
+  </script>
+
+</body>
+</html>
+
