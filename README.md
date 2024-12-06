@@ -266,7 +266,7 @@
       <li><strong>Kremi Hidratues</strong> – Thelbësor për hidratimin tuaj ditor.</li>
       <li><strong>Vaji Rikuperues Botanik</strong> – Rigjenerim gjatë natës.</li>
     </ul>
-    <a href="#" class="button">Bli Tani</a>
+    <a href=" <a href="products.html" class="button">Bli Tani</a>" class="button">Bli Tani</a>
   </section>
 
   <footer class="footer">
