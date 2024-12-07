@@ -14,7 +14,6 @@
       line-height: 1.6;
     }
 
-  
     .navbar {
       background-color: #bf8f5c;
       color: white;
@@ -40,6 +39,8 @@
       position: relative;
       height: 50vh;
       background: url('https://www.ravalmd.com/hs-fs/hubfs/AdobeStock_276306017%20(1).jpeg?width=3285&height=2190&name=AdobeStock_276306017%20(1).jpeg') no-repeat center center/cover;
+      background-size: cover;
+      background-position: center;
     }
 
     .header-content {
@@ -49,6 +50,7 @@
       transform: translateY(-50%);
       text-align: right;
       color: black;
+      max-width: 80%;
     }
 
     .header h1 {
@@ -75,7 +77,6 @@
       padding: 1.5rem 1rem;
     }
 
-   
     .section.shop-goals {
       background-color: #faf0e6;
       padding: 2rem 1rem;
@@ -112,7 +113,7 @@
       background-color: #bf8f5c;
     }
 
-    /* Seksioni Favorites */
+   
     .section.favorites {
       background-color: #fefefe;
       padding: 2rem 1rem;
@@ -158,7 +159,26 @@
       background-color: #d2a679;
     }
 
-  
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+
+      .header p {
+        font-size: 1.3rem;
+      }
+
+      .navbar {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .navbar a {
+        margin: 0.5rem 0;
+      }
+    }
+
     @media (max-width: 768px) {
       .header {
         height: 40vh;
@@ -166,6 +186,8 @@
 
       .header-content {
         right: 5%;
+        text-align: center;
+        transform: translate(0, -50%);
       }
 
       .header h1 {
@@ -174,10 +196,6 @@
 
       .header p {
         font-size: 1.2rem;
-      }
-
-      .shop-goals .goals {
-        gap: 0.7rem;
       }
 
       .shop-goals .goals button {
@@ -197,12 +215,6 @@
     @media (max-width: 480px) {
       .header {
         height: 30vh;
-      }
-
-      .header-content {
-        right: 5%;
-        text-align: center;
-        transform: translate(0, -50%);
       }
 
       .header h1 {
@@ -225,6 +237,11 @@
       .favorites li {
         font-size: 0.9rem;
       }
+
+      .favorites ul {
+        max-width: 100%;
+        padding: 0 1rem;
+      }
     }
   </style>
 </head>
@@ -232,7 +249,8 @@
   <nav class="navbar">
     <a href="index.html">Homepage</a>
     <a href="about.html">Rreth Nesh</a>
-     <a href="products.html">Produktet</a> 
+    <a href="products.html">Produktet</a> 
+     <a href="discounts.html">Zbritjet</a> 
     <a href="register.html">Regjistrohu</a>
     <a href="login.html">Login</a>
   </nav>
@@ -266,7 +284,7 @@
       <li><strong>Kremi Hidratues</strong> – Thelbësor për hidratimin tuaj ditor.</li>
       <li><strong>Vaji Rikuperues Botanik</strong> – Rigjenerim gjatë natës.</li>
     </ul>
-    <a href="#" class="button">Bli Tani</a>
+    <a href="products.html" class="button">Bli Tani</a>
   </section>
 
   <footer class="footer">
