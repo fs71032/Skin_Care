@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+    <div class="navbar">
+        <a href="database/dashboard.php" class="logo">Admin Dashboard</a>
+        <a href="database/logout.php" class="logout">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Welcome to the Admin Dashboard</h1>
+        <p>Hello, <span id="user-name"></span>! You are logged in.</p>
+
+        <h2>User List</h2>
+        <div id="user-list-container">
+            <!-- User data will be dynamically inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+ window.onload = function () {
+    fetch('database/dashboard.php')
+        .then(response => response.json())
+        .then(data => {
+            // Handle errors if any
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            // Set the user name dynamically
+            document.getElementById('user-name').textContent = data.user_name;
+
+            // Populate user list
+            let userListContainer = document.getElementById('user-list-container');
+            if (data.users.length > 0) {
+                let table = `<table class="user-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                    </tr>
+                                </thead>
+                                <tbody>`;
+                data.users.forEach(user => {
+                    table += `<tr>
+                                <td>${user.id}</td>
+                                <td>${user.name}</td>
+                                <td>${user.email}</td>
+                                <td>${user.role}</td>
+                              </tr>`;
+                });
+                table += `</tbody></table>`;
+                userListContainer.innerHTML = table;
+            } else {
+                userListContainer.innerHTML = '<p>No users found.</p>';
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+};
+
+    </script>
+</body>
+</html>
