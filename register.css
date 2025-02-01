@@ -1,0 +1,160 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5e6d9;
+    color: #333;
+  }
+  
+  .navbar {
+    background-color: #bf8f5c;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  
+  .navbar a:hover {
+    color: #d2a679;
+  }
+  
+  .hamburger {
+    display: none;
+    cursor: pointer;
+  }
+  
+  .hamburger div {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 5px;
+  }
+  
+  .registration-container {
+    width: 50%;
+    margin: 50px auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .registration-container h2 {
+    text-align: center;
+    color: #bf8f5c;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .form-group input:focus {
+    border-color: #bf8f5c;
+    outline: none;
+  }
+  
+  .form-group .error {
+    color: red;
+    font-size: 0.9rem;
+  }
+  
+  button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #bf8f5c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #d2a679;
+  }
+  
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+  }
+  
+  .footer a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .navbar a {
+      margin: 0.5rem 0;
+    }
+  
+    .hamburger {
+      display: block;
+    }
+  
+    .navbar a.hide {
+      display: none;
+    }
+  
+    .registration-container {
+      width: 80%;
+      padding: 1rem;
+    }
+  
+    .registration-container h2 {
+      font-size: 1.5rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .registration-container {
+      width: 90%;
+    }
+  
+    .form-group input {
+      padding: 1rem;
+    }
+  
+    button {
+      padding: 1.2rem;
+      font-size: 1.2rem;
+    }
+  
+    .navbar a {
+      font-size: 0.9rem;
+    }
+  }
+  

@@ -18,56 +18,96 @@
 
         <h2>User List</h2>
         <div id="user-list-container">
-            <!-- User data will be dynamically inserted here by JavaScript -->
+            
         </div>
+
+        <h2>Add New Product</h2>
+        <form id="add-product-form" enctype="multipart/form-data">
+            <label for="product-name">Product Name:</label>
+            <input type="text" id="product-name" name="product_name" required>
+            
+            <label for="product-price">Price:</label>
+            <input type="number" id="product-price" name="product_price" required>
+            
+            <label for="product-image">Product Image:</label>
+            <input type="file" id="product-image" name="product_image" accept="image/*" required>
+            
+            <button type="submit">Add Product</button>
+        </form>
     </div>
 
     <script>
- window.onload = function () {
-    fetch('database/dashboard.php')
-        .then(response => response.json())
-        .then(data => {
-            // Handle errors if any
-            if (data.error) {
-                alert(data.error);
-                return;
-            }
+        window.onload = function () {
+           
+            fetch('database/dashboard.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                        return;
+                    }
 
-            // Set the user name dynamically
-            document.getElementById('user-name').textContent = data.user_name;
+                    
+                    document.getElementById('user-name').textContent = data.user_name;
 
-            // Populate user list
-            let userListContainer = document.getElementById('user-list-container');
-            if (data.users.length > 0) {
-                let table = `<table class="user-table">
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                    </tr>
-                                </thead>
-                                <tbody>`;
-                data.users.forEach(user => {
-                    table += `<tr>
-                                <td>${user.id}</td>
-                                <td>${user.name}</td>
-                                <td>${user.email}</td>
-                                <td>${user.role}</td>
-                              </tr>`;
+                    
+                    let userListContainer = document.getElementById('user-list-container');
+                    if (data.users.length > 0) {
+                        let table = `<table class="user-table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>`;
+                        data.users.forEach(user => {
+                            table += `<tr>
+                                        <td>${user.id}</td>
+                                        <td>${user.name}</td>
+                                        <td>${user.email}</td>
+                                        <td>${user.role}</td>
+                                      </tr>`;
+                        });
+                        table += `</tbody></table>`;
+                        userListContainer.innerHTML = table;
+                    } else {
+                        userListContainer.innerHTML = '<p>No users found.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
                 });
-                table += `</tbody></table>`;
-                userListContainer.innerHTML = table;
-            } else {
-                userListContainer.innerHTML = '<p>No users found.</p>';
-            }
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
-};
 
+          
+            document.getElementById('add-product-form').addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                let formData = new FormData();
+                formData.append('product_name', document.getElementById('product-name').value);
+                formData.append('product_price', document.getElementById('product-price').value);
+                formData.append('product_image', document.getElementById('product-image').files[0]);
+
+                fetch('database/add_product.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Product added successfully!');
+                    } else {
+                        console.log("Raw response from server:", data)
+                        alert('Error adding product');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error adding product:', error);
+                });
+            });
+        };
     </script>
 </body>
 </html>

@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skincare Heaven</title>
   <style>
-    body {
-      font-family: 'Arial', sans-serif;
+    /* Reset */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
       background-color: #f5e6d9;
       color: #333;
       line-height: 1.6;
@@ -18,254 +23,151 @@
       background-color: #bf8f5c;
       color: white;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
-      padding: 1rem 2rem;
+      padding: 1rem 0;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 10;
     }
 
     .navbar a {
       color: white;
       text-decoration: none;
-      margin: 0 1rem;
-      font-size: 1rem;
+      font-size: 1.1rem;
       transition: color 0.3s ease;
+      padding: 0.5rem 1rem;
     }
 
     .navbar a:hover {
       color: #d2a679;
+      border-bottom: 2px solid #d2a679;
     }
 
     .header {
       position: relative;
-      height: 50vh;
-      background: url('https://www.ravalmd.com/hs-fs/hubfs/AdobeStock_276306017%20(1).jpeg?width=3285&height=2190&name=AdobeStock_276306017%20(1).jpeg') no-repeat center center/cover;
-      background-size: cover;
-      background-position: center;
+      height: 80vh;
+      margin-top: 60px;
+      overflow: hidden;
     }
 
-    .header-content {
+    .slider {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slider-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slider img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slider img.active {
+      opacity: 1;
+    }
+
+   
+    .slider-text {
       position: absolute;
       top: 50%;
-      right: 10%;
+      left: 5%;
       transform: translateY(-50%);
-      text-align: right;
       color: black;
-      max-width: 80%;
-    }
-
-    .header h1 {
-      font-size: 3rem;
-      margin: 0;
-      font-weight: bold;
-    }
-
-    .header p {
-      font-size: 1.5rem;
-      margin: 0.5rem 0 0;
-      font-weight: bold;
+      font-size: 2rem;
+      max-width: 40%;
+      z-index: 5;
     }
 
     .section {
-      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 2rem;
       text-align: center;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     }
 
+    .shop-goals {
+      margin-top: 2rem;
+      padding: 3rem 2rem;
+    }
+
+    .goals button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: #bf8f5c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    .goals button:hover {
+      background: #d2a679;
+    }
+
+    .shop-goals .button {
+      display: inline-block;
+      background: #bf8f5c;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 20px;
+      transition: 0.3s ease;
+    }
+
+    .shop-goals .button:hover {
+      background: #d2a679;
+    }
+
+  
     .footer {
       background-color: #333;
       color: white;
       text-align: center;
       padding: 1.5rem 1rem;
-    }
-
-    .section.shop-goals {
-      background-color: #faf0e6;
-      padding: 2rem 1rem;
-      border-radius: 8px;
-      margin: 1rem auto;
-      max-width: 800px;
-    }
-
-    .shop-goals h2 {
-      font-size: 2rem;
-      color: #bf8f5c;
-      margin-bottom: 1rem;
-    }
-
-    .shop-goals .goals {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-    }
-
-    .shop-goals .goals button {
-      background-color: #d2a679;
-      color: white;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .shop-goals .goals button:hover {
-      background-color: #bf8f5c;
-    }
-
-   
-    .section.favorites {
-      background-color: #fefefe;
-      padding: 2rem 1rem;
-      border-radius: 8px;
-      margin: 1rem auto;
-      max-width: 800px;
-    }
-
-    .favorites h2 {
-      font-size: 2rem;
-      color: #bf8f5c;
-      margin-bottom: 1rem;
-    }
-
-    .favorites ul {
-      list-style: none;
-      padding: 0;
-      margin: 0 auto;
-      max-width: 500px;
-    }
-
-    .favorites li {
-      margin: 0.5rem 0;
-      font-size: 1.1rem;
-    }
-
-    .favorites li strong {
-      color: #bf8f5c;
-    }
-
-    .favorites .button {
-      display: inline-block;
-      background-color: #bf8f5c;
-      color: white;
-      padding: 0.8rem 1.5rem;
-      text-decoration: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-    }
-
-    .favorites .button:hover {
-      background-color: #d2a679;
-    }
-
-    /* Responsiveness */
-    @media (max-width: 1024px) {
-      .header h1 {
-        font-size: 2.5rem;
-      }
-
-      .header p {
-        font-size: 1.3rem;
-      }
-
-      .navbar {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .navbar a {
-        margin: 0.5rem 0;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .header {
-        height: 40vh;
-      }
-
-      .header-content {
-        right: 5%;
-        text-align: center;
-        transform: translate(0, -50%);
-      }
-
-      .header h1 {
-        font-size: 2.5rem;
-      }
-
-      .header p {
-        font-size: 1.2rem;
-      }
-
-      .shop-goals .goals button {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
-      }
-
-      .favorites ul {
-        max-width: 100%;
-      }
-
-      .favorites li {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .header {
-        height: 30vh;
-      }
-
-      .header h1 {
-        font-size: 2rem;
-      }
-
-      .header p {
-        font-size: 1rem;
-      }
-
-      .shop-goals .goals {
-        flex-direction: column;
-      }
-
-      .shop-goals .goals button {
-        width: 100%;
-        text-align: center;
-      }
-
-      .favorites li {
-        font-size: 0.9rem;
-      }
-
-      .favorites ul {
-        max-width: 100%;
-        padding: 0 1rem;
-      }
+      margin-top: 3rem;
     }
   </style>
 </head>
 <body>
   <nav class="navbar">
-    <a href="index.html">Homepage</a>
+    <a href="index.html">Ballina</a>
     <a href="about.html">Rreth Nesh</a>
-    <a href="products.html">Produktet</a> 
-     <a href="discounts.html">Zbritjet</a> 
+    <a href="products.html">Produktet</a>
     <a href="register.html">Regjistrohu</a>
     <a href="login.html">Login</a>
   </nav>
 
-  <header class="header">
-    <div class="header-content">
-      <h1>Skincare Heaven</h1>
-      <p>Parajsa për Lëkurën Tuaj</p>
+  <div class="header">
+    <div class="slider">
+      <div class="slider-container">
+        <img src="images.jpg" alt="Slider Image 1">
+        <img src="pp8.jpg" alt="Slider Image 2">
+        <img src="database\uploads\niacinamideserum.jpg" alt="Slider Image 3">
+      </div>
+      <div class="slider-text">
+        <h1>Skincare Heaven</h1>
+        <p>Parajsa për Lëkurën Tuaj</p>
+      </div>
     </div>
-  </header>
-
-  <section class="section intro">
-    <h2>Lëkurë të Shëndetshme dhe Rrezatuese</h2>
-    <p>Në Skincare Heaven, ne besojmë në manifestimin e bukurisë natyrale me produkte dhe rutina që rigjenerojnë, ushqejnë dhe transformojnë lëkurën tuaj.</p>
-  </section>
+  </div>
 
   <section class="section shop-goals">
     <h2>Bli sipas asaj që lëkura juaj ka nevojë</h2>
@@ -275,17 +177,22 @@
       <button>Kundër Plakjes</button>
       <button>Hidratim i Thellë</button>
     </div>
-  </section>
-
-  <section class="section favorites">
-    <h2>Produktet më të kërkuara:</h2>
-    <ul>
-      <li><strong>Serumi Ndriçues</strong> – Jepni shkëlqim të menjëhershëm!</li>
-      <li><strong>Kremi Hidratues</strong> – Thelbësor për hidratimin tuaj ditor.</li>
-      <li><strong>Vaji Rikuperues Botanik</strong> – Rigjenerim gjatë natës.</li>
-    </ul>
     <a href="products.html" class="button">Bli Tani</a>
   </section>
+
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slider img');
+    const totalSlides = slides.length;
+
+    function changeSlide() {
+      slides[currentIndex].classList.remove('active');
+      currentIndex = (currentIndex + 1) % totalSlides;
+      slides[currentIndex].classList.add('active');
+    }
+
+    setInterval(changeSlide, 3000);
+  </script>
 
   <footer class="footer">
     <p>&copy; 2024 Skincare Heaven. Të gjitha të drejtat janë të rezervuara.</p>
