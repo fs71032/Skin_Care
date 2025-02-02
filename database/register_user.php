@@ -1,213 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="./css/dashboard.css">
-</head>
-<body>
-    <div class="navbar">
-        <a href="database/dashboard.php" class="logo">Admin Dashboard</a>
-        <a href="database/logout.php" class="logout">Logout</a>
-    </div>
+<?php
 
-    <div class="container">
-        <h1>Welcome to the Admin Dashboard</h1>
-        <p>Hello, <span id="user-name"></span>! You are logged in.</p>
+include_once 'database.php';
 
-        <!-- User List Section -->
-        <h2>User List</h2>
-        <div id="user-list-container"></div>
 
-        <!-- Add Product Section -->
-        <h2>Add Product</h2>
-        <form id="add-product-form" enctype="multipart/form-data">
-            <table>
-                <tr>
-                    <td><label for="product-name">Product Name:</label></td>
-                    <td><input type="text" id="product-name" name="product_name" required></td>
-                </tr>
-                <tr>
-                    <td><label for="product-price">Price:</label></td>
-                    <td><input type="number" id="product-price" name="product_price" required></td>
-                </tr>
-                <tr>
-                    <td><label for="product-image">Product Image:</label></td>
-                    <td><input type="file" id="product-image" name="product_image" accept="image/*" required></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button type="submit">Add Product</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+$database = new Database();
+$db = $database->getConnection();
 
-        <!-- Product List Section -->
-        <h2>Product List</h2>
-        <table id="product-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Price</th>
-                    <th>Image</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="product-list"></tbody>
-        </table>
-    </div>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+ 
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $confirmPassword = trim($_POST['confirm-password']);
+    $defaultRole = 'user'; // Default role for new users
 
-    <script>
-        window.onload = function () {
-            fetch('database/dashboard.php')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                        return;
-                    }
+    
+    $errors = [];
+    if (empty($name)) {
+        $errors[] = "Emri është i detyrueshëm!";
+    }
 
-                    document.getElementById('user-name').textContent = data.user_name;
-                    displayUserList(data.users);
-                    fetchProducts();
-                })
-                .catch(error => {
-                    console.error('Error fetching data:', error);
-                });
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Ju lutem shkruani një email të saktë!";
+    }
 
-            document.getElementById('add-product-form').addEventListener('submit', function (event) {
-                event.preventDefault();
+    if (strlen($password) < 6) {
+        $errors[] = "Fjalëkalimi duhet të jetë të paktën 6 karaktere!";
+    }
 
-                let formData = new FormData();
-                formData.append('product_name', document.getElementById('product-name').value);
-                formData.append('product_price', document.getElementById('product-price').value);
-                formData.append('product_image', document.getElementById('product-image').files[0]);
+    if ($password !== $confirmPassword) {
+        $errors[] = "Fjalëkalimet nuk përputhen!";
+    }
 
-                let productId = document.getElementById('product-id').value;
-                if (productId) {
-                    formData.append('product_id', productId);
-                    fetch('database/edit_product.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Product updated successfully!');
-                            fetchProducts();
-                        } else {
-                            alert('Error updating product');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error updating product:', error);
-                    });
-                } else {
-                    fetch('database/add_product.php', {
-                        method: 'POST',
-                        body: formData
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            alert('Product added successfully!');
-                            fetchProducts();
-                        } else {
-                            alert('Error adding product');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error adding product:', error);
-                    });
-                }
-            });
-        };
+   
+    if (empty($errors)) {
+      
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
 
-        function fetchProducts() {
-            fetch('database/fetch_products.php')
-                .then(response => response.json())
-                .then(products => {
-                    let productList = document.getElementById('product-list');
-                    productList.innerHTML = '';
+      
+        $query = "INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)";
+        $stmt = $db->prepare($query);
 
-                    products.forEach(product => {
-                        let row = `<tr>
-                            <td>${product.id}</td>
-                            <td>${product.name}</td>
-                            <td>${product.price}</td>
-                            <td><img src="${product.image}" width="50"></td>
-                            <td>
-                                <button onclick="editProduct(${product.id}, '${product.name}', ${product.price}, '${product.image}')">Edit</button>
-                                <button onclick="deleteProduct(${product.id})">Delete</button>
-                            </td>
-                        </tr>`;
-                        productList.innerHTML += row;
-                    });
-                })
-                .catch(error => {
-                    console.error('Error fetching products:', error);
-                });
-        }
+       
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $hashedPassword);
+        $stmt->bindParam(':role', $defaultRole);
 
-        function editProduct(id, name, price, image) {
-            document.getElementById('product-id').value = id;
-            document.getElementById('product-name').value = name;
-            document.getElementById('product-price').value = price;
-            document.getElementById('product-image').value = ''; // Clear the image input field for re-upload
-        }
-
-        function deleteProduct(id) {
-            if (confirm("Are you sure you want to delete this product?")) {
-                fetch('database/delete_product.php', {
-                    method: 'POST',
-                    body: JSON.stringify({ product_id: id }),
-                    headers: { "Content-Type": "application/json" }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('Product deleted successfully!');
-                        fetchProducts();
-                    } else {
-                        alert('Error deleting product');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error deleting product:', error);
-                });
-            }
-        }
-
-        function displayUserList(users) {
-            let userListContainer = document.getElementById('user-list-container');
-            if (users.length > 0) {
-                let table = `<table class="user-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                users.forEach(user => {
-                    table += `<tr>
-                        <td>${user.id}</td>
-                        <td>${user.name}</td>
-                        <td>${user.email}</td>
-                        <td>${user.role}</td>
-                    </tr>`;
-                });
-                table += `</tbody></table>`;
-                userListContainer.innerHTML = table;
+        try {
+           
+            if ($stmt->execute()) {
+                echo "Regjistrimi u krye me sukses!";
             } else {
-                userListContainer.innerHTML = '<p>No users found.</p>';
+                echo "Diçka shkoi keq, ju lutem provoni përsëri.";
+            }
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) { // Duplicate entry
+                echo "Ky email është tashmë i regjistruar!";
+            } else {
+                echo "Gabim: " . $e->getMessage();
             }
         }
-    </script>
-</body>
-</html>
+    } else {
+      
+        foreach ($errors as $error) {
+            echo "<p style='color:red;'>$error</p>";
+        }
+    }
+} else {
+    echo "Kërkesa nuk është e vlefshme!";
+}
+?>
