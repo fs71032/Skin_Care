@@ -16,29 +16,39 @@
         <h1>Welcome to the Admin Dashboard</h1>
         <p>Hello, <span id="user-name"></span>! You are logged in.</p>
 
+        <!-- User List Section -->
         <h2>User List</h2>
-        <div id="user-list-container">
-            
-        </div>
+        <div id="user-list-container"></div>
 
-        <h2>Add New Product</h2>
+        <!-- Add Product Section -->
+        <h2>Add Product</h2>
         <form id="add-product-form" enctype="multipart/form-data">
-            <label for="product-name">Product Name:</label>
-            <input type="text" id="product-name" name="product_name" required>
-            
-            <label for="product-price">Price:</label>
-            <input type="number" id="product-price" name="product_price" required>
-            
-            <label for="product-image">Product Image:</label>
-            <input type="file" id="product-image" name="product_image" accept="image/*" required>
-            
-            <button type="submit">Add Product</button>
+            <input type="hidden" id="product-id">
+            <table>
+                <tr>
+                    <td><label for="product-name">Product Name:</label></td>
+                    <td><input type="text" id="product-name" name="product_name" required></td>
+                </tr>
+                <tr>
+                    <td><label for="product-price">Price:</label></td>
+                    <td><input type="number" id="product-price" name="product_price" required></td>
+                </tr>
+                <tr>
+                    <td><label for="product-image">Product Image:</label></td>
+                    <td><input type="file" id="product-image" name="product_image" accept="image/*" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Add/Update Product</button>
+                    </td>
+                </tr>
+            </table>
         </form>
     </div>
 
     <script>
         window.onload = function () {
-           
+            // Fetch user data
             fetch('database/dashboard.php')
                 .then(response => response.json())
                 .then(data => {
@@ -47,41 +57,15 @@
                         return;
                     }
 
-                    
                     document.getElementById('user-name').textContent = data.user_name;
-
-                    
-                    let userListContainer = document.getElementById('user-list-container');
-                    if (data.users.length > 0) {
-                        let table = `<table class="user-table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
-                                                <th>Role</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>`;
-                        data.users.forEach(user => {
-                            table += `<tr>
-                                        <td>${user.id}</td>
-                                        <td>${user.name}</td>
-                                        <td>${user.email}</td>
-                                        <td>${user.role}</td>
-                                      </tr>`;
-                        });
-                        table += `</tbody></table>`;
-                        userListContainer.innerHTML = table;
-                    } else {
-                        userListContainer.innerHTML = '<p>No users found.</p>';
-                    }
+                    displayUserList(data.users);
+                    fetchProducts();
                 })
                 .catch(error => {
                     console.error('Error fetching data:', error);
                 });
 
-          
+            // Handle form submission (Add/Edit Product)
             document.getElementById('add-product-form').addEventListener('submit', function (event) {
                 event.preventDefault();
 
@@ -90,24 +74,131 @@
                 formData.append('product_price', document.getElementById('product-price').value);
                 formData.append('product_image', document.getElementById('product-image').files[0]);
 
-                fetch('database/add_product.php', {
+                let productId = document.getElementById('product-id').value;
+                if (productId) {
+                    formData.append('product_id', productId);
+                    fetch('database/edit_product.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Product updated successfully!');
+                            fetchProducts();
+                        } else {
+                            alert('Error updating product');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating product:', error);
+                    });
+                } else {
+                    fetch('database/add_product.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Product added successfully!');
+                            fetchProducts();
+                        } else {
+                            alert('Error adding product');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error adding product:', error);
+                    });
+                }
+            });
+        };
+
+        // Fetch products from the server
+        function fetchProducts() {
+            fetch('database/fetch_products.php')
+                .then(response => response.json())
+                .then(products => {
+                    let productListBody = document.getElementById('product-list-body');
+                    productListBody.innerHTML = '';
+
+                    products.forEach(product => {
+                        let row = `<tr>
+                            <td>${product.name}</td>
+                            <td>${product.price}</td>
+                            <td><img src="${product.image}" width="50"></td>
+                            <td>
+                                <button onclick="editProduct(${product.id}, '${product.name}', ${product.price}, '${product.image}')">Edit</button>
+                                <button onclick="deleteProduct(${product.id})">Delete</button>
+                            </td>
+                        </tr>`;
+                        productListBody.innerHTML += row;
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching products:', error);
+                });
+        }
+
+        // Edit a product
+        function editProduct(id, name, price, image) {
+            document.getElementById('product-id').value = id;
+            document.getElementById('product-name').value = name;
+            document.getElementById('product-price').value = price;
+            document.getElementById('product-image').value = ''; // Clear the image input for re-upload
+        }
+
+        // Delete a product
+        function deleteProduct(id) {
+            if (confirm("Are you sure you want to delete this product?")) {
+                fetch('database/delete_product.php', {
                     method: 'POST',
-                    body: formData
+                    body: JSON.stringify({ product_id: id }),
+                    headers: { "Content-Type": "application/json" }
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        alert('Product added successfully!');
+                        alert('Product deleted successfully!');
+                        fetchProducts();
                     } else {
-                        console.log("Raw response from server:", data)
-                        alert('Error adding product');
+                        alert('Error deleting product');
                     }
                 })
                 .catch(error => {
-                    console.error('Error adding product:', error);
+                    console.error('Error deleting product:', error);
                 });
-            });
-        };
+            }
+        }
+
+        // Display user list
+        function displayUserList(users) {
+            let userListContainer = document.getElementById('user-list-container');
+            if (users.length > 0) {
+                let table = `<table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                users.forEach(user => {
+                    table += `<tr>
+                        <td>${user.id}</td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.role}</td>
+                    </tr>`;
+                });
+                table += `</tbody></table>`;
+                userListContainer.innerHTML = table;
+            } else {
+                userListContainer.innerHTML = '<p>No users found.</p>';
+            }
+        }
     </script>
 </body>
 </html>
